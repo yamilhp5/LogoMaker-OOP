@@ -1,17 +1,17 @@
-// Inquirer (node package manager) import
+// Inquirer (node package manager) import // File system module (node package manager) import
+const fs = require("fs");
 const inquirer = require("inquirer");
 
-// File system module (node package manager) import
-const fs = require("fs");
 
-// Importing classes from ./lib/shapes directory
+
+// Importing classes from ./lib/shapes 
 const { Triangle, Square, Circle } = require("./lib/shapes");
 
 // Function writes the SVG file using user answers from inquirer prompts
 function writeToFile(fileName, answers) {
-  // File starts as an empty string
+  
   let svgString = "";
-  // Sets width and height of logo container
+ 
   svgString =
     '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
   // <g> tag wraps <text> tag so that user font input layers on top of polygon -> not behind
@@ -39,38 +39,38 @@ function writeToFile(fileName, answers) {
   // Closing </svg> tag
   svgString += "</svg>";
 
-  // Using file system module to generate svg file, takes in file name given in the promptUser function, the svg string, and a ternary operator which handles logging any errors, or a "Generated logo.svg" message to the console  
+  // Module to generate svg file, takes in file name given in the promptUser function, a "Generated logo.svg" message to the console.  
   fs.writeFile(fileName, svgString, (err) => {
     err ? console.log(err) : console.log("Generated logo.svg");
   });
 }
 
-// This function utilizes inquirer .prompt to prompt the user to answer questions in the command line and save user input
+// Utilizes inquirer .prompt to prompt the user to answer questions in the command line and save user input
 function promptUser() {
   inquirer
     .prompt([
-      // Text prompt
+      // Text 
       {
         type: "input",
         message:
           "What text would you like you logo to display? (Enter up to three characters)",
         name: "text",
       },
-      // Text color prompt
+      //color prompt
       {
         type: "input",
         message:
           "Choose text color (Enter color keyword OR a hexadecimal number)",
         name: "textColor",
       },
-      // Shape choice prompt
+      // Shape choice
       {
         type: "list",
         message: "What shape would you like the logo to render?",
         choices: ["Triangle", "Square", "Circle"],
         name: "shape",
       },
-      // Shape color prompt
+      // Shape color
       {
         type: "input",
         message:
@@ -79,7 +79,7 @@ function promptUser() {
       },
     ])
     .then((answers) => {
-      // Error handling for text prompt (user must enter 3 characters or less for logo to generate)
+      // Error handling for text prompt 
       if (answers.text.length > 3) {
         console.log("Must enter a value of no more than 3 characters");
         promptUser();
@@ -90,5 +90,5 @@ function promptUser() {
     });
 }
 
-// Calling promptUser function so inquirer prompts fire off when application is ran
+
 promptUser();
